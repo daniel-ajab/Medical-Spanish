@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Med Spanish — Urology</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Spline+Sans+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0D1117;
+    --surface: #161B22;
+    --surface2: #21262D;
+    --surface3: #30363D;
+    --border: #30363D;
+    --blue: #2F81F7;
+    --blue-dim: #1A4A8A;
+    --green: #3FB950;
+    --green-dim: #1A4A2A;
+    --red: #F85149;
+    --red-dim: #4A1A1A;
+    --yellow: #D29922;
+    --yellow-dim: #3D2D00;
+    --text: #E6EDF3;
+    --text2: #8B949E;
+    --text3: #6E7681;
+    --accent: #58A6FF;
+    --mono: 'Spline Sans Mono', monospace;
+    --sans: 'Inter', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(13,17,23,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0;
+    height: 52px;
+    padding: 0 16px;
+  }
+  .nav-brand {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+    margin-right: 24px;
+    white-space: nowrap;
+  }
+  .nav-tabs {
+    display: flex;
+    gap: 2px;
+    flex: 1;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-tabs::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: var(--text2);
+    font-size: 13px;
+    font-family: var(--sans);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+    font-weight: 500;
+  }
+  .tab-btn:hover { background: var(--surface2); color: var(--text); }
+  .tab-btn.active { background: var(--blue-dim); color: var(--accent); }
+
+  .nav-progress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 16px;
+    flex-shrink: 0;
+  }
+  .xp-badge {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--yellow);
+    background: var(--yellow-dim);
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--yellow);
+  }
+
+  /* ── MAIN ── */
+  .main {
+    padding-top: 52px;
+    min-height: 100vh;
+  }
+
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* ── HOME ── */
+  .home {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 20px 40px;
+  }
+  .home-hero {
+    text-align: center;
+    padding: 40px 0 48px;
+  }
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .hero-title {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: 16px;
+    color: var(--text2);
+    max-width: 480px;
+    margin: 0 auto 32px;
+    line-height: 1.6;
+  }
+  .science-pills {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+  .pill {
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    color: var(--text2);
+    background: var(--surface);
+  }
+  .pill.blue  { border-color: var(--blue);   color: var(--accent);  background: var(--blue-dim); }
+  .pill.green { border-color: var(--green);  color: var(--green);   background: var(--green-dim); }
+  .pill.yellow{ border-color: var(--yellow); color: var(--yellow);  background: var(--yellow-dim); }
+
+  .deck-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+  }
+  .deck-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .deck-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 12px 12px 0 0;
+  }
+  .deck-card.blue::before  { background: var(--blue); }
+  .deck-card.green::before { background: var(--green); }
+  .deck-card.red::before   { background: var(--red); }
+  .deck-card.yellow::before{ background: var(--yellow); }
+  .deck-card.purple::before{ background: #A371F7; }
+  .deck-card.teal::before  { background: #39D353; }
+
+  .deck-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(88,166,255,0.1);
+  }
+  .deck-icon { font-size: 28px; margin-bottom: 10px; }
+  .deck-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .deck-count { font-size: 12px; color: var(--text2); margin-bottom: 12px; }
+  .deck-bar {
+    height: 4px;
+    background: var(--surface3);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .deck-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: var(--green);
+    transition: width 0.5s ease;
+  }
+  .deck-bar-label {
+    font-size: 11px;
+    color: var(--text3);
+    margin-top: 6px;
+  }
+
+  /* ── FLASHCARD SCREEN ── */
+  .fc-screen {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 24px 20px 40px;
+  }
+  .fc-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .fc-back {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text2);
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: var(--sans);
+    transition: all 0.15s;
+  }
+  .fc-back:hover { background: var(--surface2); color: var(--text); }
+  .fc-deck-name { font-size: 15px; font-weight: 600; }
+  .fc-progress-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .fc-progress-bar {
+    flex: 1;
+    height: 6px;
+    background: var(--surface3);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .fc-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--blue), var(--green));
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+  .fc-count { font-family: var(--mono); font-size: 12px; color: var(--text2); white-space: nowrap; }
+
+  /* CARD */
+  .card-area {
+    perspective: 1000px;
+    margin-bottom: 24px;
+  }
+  .card-inner {
+    position: relative;
+    width: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+  }
+  .card-inner.flipped { transform: rotateY(180deg); }
+
+  .card-face {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px 36px;
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  .card-face.back {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    transform: rotateY(180deg);
+    background: var(--surface2);
+    border-color: var(--accent);
+  }
+
+  .card-category {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .card-english {
+    font-size: clamp(18px, 3vw, 26px);
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 12px;
+  }
+  .card-hint {
+    font-size: 13px;
+    color: var(--text3);
+    font-style: italic;
+  }
+  .card-tap {
+    font-size: 12px;
+    color: var(--text3);
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .card-tap-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.3); }
+  }
+
+  .card-spanish {
+    font-size: clamp(22px, 4vw, 32px);
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  .card-pronunciation {
+    font-family: var(--mono);
+    font-size: 15px;
+    color: var(--yellow);
+    margin-bottom: 20px;
+    letter-spacing: 0.03em;
+  }
+  .card-english-small {
+    font-size: 14px;
+    color: var(--text2);
+    font-style: italic;
+  }
+
+  /* AUDIO BUTTON */
+  .speak-btn {
+    margin-top: 20px;
+    background: var(--surface3);
+    border: 1px solid var(--border);
+    color: var(--text2);
+    padding: 8px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: var(--sans);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.15s;
+  }
+  .speak-btn:hover { background: var(--blue-dim); color: var(--accent); border-color: var(--blue); }
+  .speak-btn.playing { background: var(--blue-dim); color: var(--accent); border-color: var(--blue); }
+
+  /* RATING BUTTONS */
+  .rating-area {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .rating-btn {
+    padding: 14px 10px;
+    border-radius: 10px;
+    border: 1px solid;
+    cursor: pointer;
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.15s;
+    text-align: center;
+    line-height: 1.3;
+  }
+  .rating-btn .rating-label { font-size: 11px; font-weight: 400; opacity: 0.8; display: block; margin-top: 3px; }
+  .btn-hard   { background: var(--red-dim);   border-color: var(--red);   color: var(--red); }
+  .btn-medium { background: var(--yellow-dim); border-color: var(--yellow); color: var(--yellow); }
+  .btn-easy   { background: var(--green-dim);  border-color: var(--green);  color: var(--green); }
+  .btn-hard:hover   { background: var(--red);   color: #fff; }
+  .btn-medium:hover { background: var(--yellow); color: #000; }
+  .btn-easy:hover   { background: var(--green);  color: #000; }
+
+  .rating-hidden { display: none; }
+
+  /* SKIP ROW */
+  .skip-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .skip-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text3);
+    padding: 6px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: var(--sans);
+    transition: all 0.15s;
+  }
+  .skip-btn:hover { border-color: var(--text2); color: var(--text2); }
+
+  /* SCIENCE BAR */
+  .science-bar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+    color: var(--text2);
+  }
+  .science-icon { font-size: 18px; flex-shrink: 0; }
+  .science-text { line-height: 1.5; }
+  .science-text strong { color: var(--text); }
+
+  /* SESSION COMPLETE */
+  .complete-screen {
+    max-width: 500px;
+    margin: 60px auto;
+    text-align: center;
+    padding: 40px 20px;
+  }
+  .complete-emoji { font-size: 64px; margin-bottom: 20px; }
+  .complete-title { font-size: 28px; font-weight: 700; margin-bottom: 10px; }
+  .complete-sub { font-size: 15px; color: var(--text2); margin-bottom: 36px; line-height: 1.6; }
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+  .stat-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 10px;
+  }
+  .stat-num { font-size: 28px; font-weight: 700; font-family: var(--mono); }
+  .stat-label { font-size: 12px; color: var(--text2); margin-top: 4px; }
+  .stat-box.green .stat-num { color: var(--green); }
+  .stat-box.red .stat-num   { color: var(--red); }
+  .stat-box.blue .stat-num  { color: var(--accent); }
+
+  .btn-primary {
+    background: var(--blue);
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: var(--sans);
+    transition: all 0.15s;
+    margin: 6px;
+  }
+  .btn-primary:hover { background: var(--accent); transform: translateY(-1px); }
+  .btn-secondary {
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 14px 32px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: var(--sans);
+    transition: all 0.15s;
+    margin: 6px;
+  }
+  .btn-secondary:hover { background: var(--surface2); }
+
+  /* SCRIPT MODE */
+  .script-screen {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 24px 20px 60px;
+  }
+  .script-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .script-title { font-size: 20px; font-weight: 700; }
+  .script-sub { font-size: 13px; color: var(--text2); margin-top: 2px; }
+
+  .script-row {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    transition: all 0.2s;
+  }
+  .script-row:hover { border-color: var(--border); }
+  .script-situation {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 10px 16px 0;
+  }
+  .script-es {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text);
+    padding: 8px 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .script-es:hover { color: var(--accent); }
+  .script-es-text { flex: 1; line-height: 1.4; }
+  .script-speak {
+    background: var(--surface3);
+    border: none;
+    color: var(--text2);
+    width: 32px; height: 32px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    flex-shrink: 0;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .script-speak:hover { background: var(--blue-dim); color: var(--accent); }
+  .script-en {
+    font-size: 13px;
+    color: var(--text2);
+    font-style: italic;
+    padding: 0 16px 14px;
+    line-height: 1.4;
+  }
+
+  /* VOCAB SEARCH */
+  .vocab-screen {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 24px 20px 60px;
+  }
+  .search-bar {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-size: 16px;
+    font-family: var(--sans);
+    padding: 14px 18px;
+    outline: none;
+    margin-bottom: 20px;
+    transition: border-color 0.15s;
+  }
+  .search-bar:focus { border-color: var(--accent); }
+  .search-bar::placeholder { color: var(--text3); }
+
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 10px;
+  }
+  .vocab-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .vocab-item:hover { border-color: var(--accent); background: var(--surface2); }
+  .vocab-en { font-size: 14px; color: var(--text2); }
+  .vocab-es { font-size: 17px; font-weight: 600; color: var(--accent); }
+  .vocab-pron { font-family: var(--mono); font-size: 12px; color: var(--yellow); }
+  .vocab-cat { font-size: 11px; color: var(--text3); font-family: var(--mono); letter-spacing: 0.05em; }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-size: 14px;
+    z-index: 999;
+    transition: transform 0.3s ease;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* STREAKS */
+  .streak-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 14px 18px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+  .streak-fire { font-size: 20px; }
+  .streak-text { font-size: 13px; color: var(--text2); }
+  .streak-text strong { color: var(--yellow); }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .rating-area { grid-template-columns: 1fr 1fr 1fr; }
+    .card-face { padding: 28px 20px; min-height: 220px; }
+    .card-spanish { font-size: 24px; }
+    .deck-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-brand">MED·ES</div>
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="showScreen('home')">🏠 Home</button>
+    <button class="tab-btn" onclick="showScreen('flashcards')">🃏 Flashcards</button>
+    <button class="tab-btn" onclick="showScreen('scripts')">🗣 Scripts</button>
+    <button class="tab-btn" onclick="showScreen('vocab')">🔍 Vocab</button>
+  </div>
+  <div class="nav-progress">
+    <span class="xp-badge" id="xp-badge">⚡ 0 XP</span>
+  </div>
+</nav>
+
+<div class="main">
+
+<!-- ══ HOME SCREEN ══════════════════════════════════════ -->
+<div id="screen-home" class="screen active">
+<div class="home">
+  <div class="home-hero">
+    <div class="hero-tag">Mount Sinai · Urology</div>
+    <h1 class="hero-title">Medical Spanish<br>for Urology</h1>
+    <p class="hero-sub">Built for tomorrow morning. Science-backed flashcards, real patient scripts, and a full vocabulary search.</p>
+    <div class="science-pills">
+      <span class="pill blue">🧠 Spaced Repetition</span>
+      <span class="pill green">✅ Active Recall</span>
+      <span class="pill yellow">🎯 Patient-Ready Scripts</span>
+      <span class="pill">🔊 Audio Pronunciation</span>
+    </div>
+  </div>
+
+  <div class="streak-row">
+    <div class="streak-fire">🔥</div>
+    <div class="streak-text">Practice tip: <strong>Say every Spanish phrase out loud.</strong> Silent reading builds recognition, not production. You need production.</div>
+  </div>
+
+  <div id="deck-grid" class="deck-grid"></div>
+</div>
+</div>
+
+<!-- ══ FLASHCARD SCREEN ══════════════════════════════════════ -->
+<div id="screen-flashcards" class="screen">
+<div class="fc-screen">
+  <div class="fc-header">
+    <button class="fc-back" onclick="showScreen('home')">← Back</button>
+    <div>
+      <div class="fc-deck-name" id="fc-deck-name">Deck</div>
+    </div>
+    <div class="fc-progress-wrap">
+      <div class="fc-progress-bar"><div class="fc-progress-fill" id="fc-prog" style="width:0%"></div></div>
+      <div class="fc-count" id="fc-count">0/0</div>
+    </div>
+  </div>
+
+  <!-- SCIENCE TIP -->
+  <div class="science-bar" id="science-tip" style="margin-bottom:20px">
+    <div class="science-icon">🧠</div>
+    <div class="science-text" id="science-tip-text">Loading tip...</div>
+  </div>
+
+  <!-- CARD -->
+  <div class="card-area">
+    <div class="card-inner" id="card-inner" onclick="flipCard()">
+      <!-- FRONT -->
+      <div class="card-face front">
+        <div class="card-category" id="card-cat">Category</div>
+        <div class="card-english" id="card-en">English phrase here</div>
+        <div class="card-hint" id="card-hint"></div>
+        <div class="card-tap">
+          <div class="card-tap-dot"></div>
+          Tap to reveal Spanish
+        </div>
+      </div>
+      <!-- BACK -->
+      <div class="card-face back">
+        <div class="card-category" id="card-cat-back">Category</div>
+        <div class="card-spanish" id="card-es">Español</div>
+        <div class="card-pronunciation" id="card-pron">pronunciation</div>
+        <div class="card-english-small" id="card-en-small">English</div>
+        <button class="speak-btn" id="speak-btn" onclick="speakSpanish(event)">
+          🔊 Hear it
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RATING (hidden until flipped) -->
+  <div class="rating-area rating-hidden" id="rating-area">
+    <button class="rating-btn btn-hard" onclick="rateCard(1)">
+      😓 Hard
+      <span class="rating-label">Show again soon</span>
+    </button>
+    <button class="rating-btn btn-medium" onclick="rateCard(3)">
+      🤔 Got it
+      <span class="rating-label">Review tomorrow</span>
+    </button>
+    <button class="rating-btn btn-easy" onclick="rateCard(5)">
+      ✅ Easy
+      <span class="rating-label">Know this cold</span>
+    </button>
+  </div>
+
+  <div class="skip-row rating-hidden" id="skip-row">
+    <button class="skip-btn" onclick="skipCard()">Skip this card →</button>
+  </div>
+
+</div>
+</div>
+
+<!-- ══ SESSION COMPLETE ══════════════════════════════════════ -->
+<div id="screen-complete" class="screen">
+<div class="complete-screen">
+  <div class="complete-emoji">🎯</div>
+  <div class="complete-title">Session Done</div>
+  <div class="complete-sub" id="complete-sub">You reviewed all cards in this deck. Spaced repetition schedules are updated — hard cards will appear first next time.</div>
+  <div class="stats-row">
+    <div class="stat-box green"><div class="stat-num" id="stat-easy">0</div><div class="stat-label">Easy</div></div>
+    <div class="stat-box blue"><div class="stat-num" id="stat-med">0</div><div class="stat-label">Got it</div></div>
+    <div class="stat-box red"><div class="stat-num" id="stat-hard">0</div><div class="stat-label">Hard</div></div>
+  </div>
+  <div>
+    <button class="btn-primary" onclick="restartDeck()">🔄 Review Hard Cards</button>
+    <button class="btn-secondary" onclick="showScreen('home')">← Choose Another Deck</button>
+  </div>
+</div>
+</div>
+
+<!-- ══ SCRIPTS SCREEN ══════════════════════════════════════ -->
+<div id="screen-scripts" class="screen">
+<div class="script-screen">
+  <div class="script-header">
+    <div>
+      <div class="script-title">Patient Scripts</div>
+      <div class="script-sub">Tap the Spanish text to hear it · Organized by clinical situation</div>
+    </div>
+  </div>
+  <div id="scripts-list"></div>
+</div>
+</div>
+
+<!-- ══ VOCAB SCREEN ══════════════════════════════════════ -->
+<div id="screen-vocab" class="screen">
+<div class="vocab-screen">
+  <input class="search-bar" type="text" id="vocab-search" placeholder="Search in English or Spanish..." oninput="filterVocab()">
+  <div class="vocab-grid" id="vocab-grid"></div>
+</div>
+</div>
+
+</div><!-- /main -->
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════════════════════════
+
+const SCIENCE_TIPS = [
+  "<strong>Active recall</strong> beats re-reading by 2-3x. Trying to remember before you see the answer is what builds durable memory.",
+  "<strong>Say it out loud.</strong> Motor production (speaking) and auditory input (hearing yourself) create stronger neural traces than reading silently.",
+  "<strong>Spaced repetition</strong> means harder cards come back sooner. Rate honestly — gaming it only hurts you.",
+  "<strong>Interleaving works.</strong> Mixing different categories (rounds + post-op + anatomy) in one session improves long-term retention vs blocked practice.",
+  "<strong>Emotional stakes help encoding.</strong> Visualize the actual patient, the room, the moment. Your brain stores contextualized memories better.",
+  "<strong>Sleep consolidates.</strong> Reviewing right before bed and again in the morning is the highest ROI schedule you can follow tonight.",
+  "<strong>Production over recognition.</strong> You need to say the Spanish, not just recognize it. That's why you should cover the Spanish column and try to generate it.",
+  "<strong>Retrieval practice research</strong> (Roediger & Karpicke, 2006): testing yourself is ~50% more effective than studying the same time. This app is a testing tool.",
+];
+
+const DECKS = [
+  {
+    id: "rounds",
+    title: "Morning Rounds",
+    icon: "🌅",
+    color: "blue",
+    cards: [
+      {en:"Good morning, I'm Daniel, a medical student", es:"Buenos días, soy Daniel, estudiante de medicina", pron:"BWEH-nos DEE-as, soy Daniel, es-too-dee-AN-teh deh meh-dee-SEE-na", cat:"Greeting"},
+      {en:"I work with the urology team", es:"Trabajo con el equipo de urología", pron:"tra-BA-hoh kon el eh-KEE-poh del dok-TOR", cat:"Greeting"},
+      {en:"May I come in?", es:"¿Puedo pasar?", pron:"PWEH-doh pa-SAR", cat:"Greeting"},
+      {en:"How did the night go?", es:"¿Cómo pasó la noche?", pron:"KOH-moh pa-SOH la NOH-cheh", cat:"Rounds"},
+      {en:"Were you able to sleep?", es:"¿Pudo dormir?", pron:"POO-doh dor-MEER", cat:"Rounds"},
+      {en:"Do you have pain right now?", es:"¿Tiene dolor ahorita?", pron:"TYEH-neh doh-LOR ah-oh-REE-ta", cat:"Rounds"},
+      {en:"From 1 to 10, how is the pain?", es:"Del uno al diez, ¿cuánto es el dolor?", pron:"del OO-no al dyess, KWAN-toh es el doh-LOR", cat:"Rounds"},
+      {en:"Did you have nausea or vomiting?", es:"¿Tuvo náuseas o vómito?", pron:"TOO-voh NOW-seh-as oh VOH-mee-toh", cat:"Rounds"},
+      {en:"Were you able to eat anything?", es:"¿Pudo comer algo?", pron:"POO-doh koh-MER AL-goh", cat:"Rounds"},
+      {en:"Did you walk a little?", es:"¿Caminó un poco?", pron:"ka-mee-NOH oon POH-koh", cat:"Rounds"},
+      {en:"I'm going to check the wound", es:"Voy a ver la herida", pron:"voy ah ver la eh-REE-dah", cat:"Exam"},
+      {en:"I'm going to check the drainage tube", es:"Voy a revisar el tubo de drenaje", pron:"voy ah reh-vee-SAR el TOO-boh deh dreh-NA-heh", cat:"Exam"},
+      {en:"The doctor will come later", es:"El doctor va a venir más tarde", pron:"el dok-TOR vah ah veh-NEER mas TAR-deh", cat:"Closing"},
+      {en:"Do you have any questions for me?", es:"¿Tiene alguna pregunta para mí?", pron:"TYEH-neh al-GOO-nah preh-GOON-ta PA-ra mee", cat:"Closing"},
+      {en:"You are progressing well", es:"Está progresando bien", pron:"es-TA pro-greh-SAN-doh byehn", cat:"Closing"},
+      {en:"See you later", es:"Hasta luego", pron:"AH-sta LWEH-goh", cat:"Closing"},
+    ]
+  },
+  {
+    id: "postop",
+    title: "Post-Op Care",
+    icon: "🏥",
+    color: "green",
+    cards: [
+      {en:"The surgery is finished, everything went well", es:"La cirugía terminó, todo salió bien", pron:"la see-roo-HEE-ah ter-mee-NOH, TOH-doh sa-LYOH byehn", cat:"Recovery Room"},
+      {en:"You are okay, you are safe", es:"Está bien, está en buenas manos", pron:"es-TA byehn, es-TA en BWEH-nas MA-nos", cat:"Recovery Room"},
+      {en:"Do you have pain? Where does it hurt?", es:"¿Tiene dolor? ¿Dónde le duele?", pron:"TYEH-neh doh-LOR? DON-deh leh DWEH-leh", cat:"Recovery Room"},
+      {en:"We are going to give you medicine for the pain", es:"Le vamos a dar medicina para el dolor", pron:"leh VAH-mos ah dar meh-dee-SEE-na PA-ra el doh-LOR", cat:"Recovery Room"},
+      {en:"You have a catheter to drain the urine", es:"Tiene un catéter para drenar la orina", pron:"TYEH-neh oon ka-TEH-ter PA-ra dreh-NAR la oh-REE-na", cat:"Catheter"},
+      {en:"A little blood in the urine is normal after surgery", es:"Es normal ver un poco de sangre en la orina después de la cirugía", pron:"es nor-MAL ver oon POH-koh deh SAN-greh...", cat:"Catheter"},
+      {en:"Drink plenty of water to clear the urine", es:"Tome bastante agua para limpiar la orina", pron:"TOH-meh bas-TAN-teh AH-gwa PA-ra leem-PYAR", cat:"Catheter"},
+      {en:"The catheter will be removed on [day]", es:"El catéter se va a quitar el [día]", pron:"el ka-TEH-ter seh vah ah kee-TAR el [DEE-ah]", cat:"Catheter"},
+      {en:"Some swelling in the scrotum is normal", es:"Es normal tener hinchazón en el escrotum después de la cirugía", pron:"es nor-MAL teh-NER een-cha-SON...", cat:"Scrotal/Penile"},
+      {en:"Use the scrotal support to reduce swelling", es:"Use el soporte escrotal para bajar la hinchazón", pron:"OO-seh el so-POR-teh es-kro-TAL PA-ra ba-HAR", cat:"Scrotal/Penile"},
+      {en:"Keep the wound clean and dry", es:"Mantenga la herida limpia y seca", pron:"man-TEN-ga la eh-REE-da LEEM-pya ee SEH-ka", cat:"Wound"},
+      {en:"Do not lift heavy things for 2 weeks", es:"No levante cosas pesadas por dos semanas", pron:"noh leh-VAN-teh KOH-sas peh-SA-das por dos seh-MA-nas", cat:"Wound"},
+      {en:"No sexual activity for 4 to 6 weeks", es:"No debe tener actividad sexual por cuatro a seis semanas", pron:"noh DEH-beh teh-NER ak-tee-vee-DAD sex-oo-AL", cat:"Activity"},
+      {en:"It is important to walk a little every day", es:"Es importante caminar un poco cada día", pron:"es eem-por-TAN-teh ka-mee-NAR oon POH-koh KA-da DEE-ah", cat:"Activity"},
+      {en:"Do not inflate the device yet", es:"No infle el dispositivo todavía", pron:"noh EEN-fleh el dis-poh-see-TEE-voh toh-dah-VEE-ah", cat:"Prosthesis"},
+      {en:"The doctor will teach you how to use the device in 4-6 weeks", es:"El doctor le va a enseñar cómo usar el dispositivo en cuatro a seis semanas", pron:"el dok-TOR leh vah ah en-seh-NYAR...", cat:"Prosthesis"},
+      {en:"Swelling and bruising are normal at first", es:"La hinchazón y los moretones son normales al principio", pron:"la een-cha-SON ee los moh-reh-TOH-nes...", cat:"Prosthesis"},
+      {en:"We need to do a semen analysis in 3 months", es:"Necesitamos hacer un análisis de semen en tres meses", pron:"neh-seh-see-TAH-mos ah-SER oon ah-NA-lee-sis deh SEH-men", cat:"Reversal"},
+    ]
+  },
+  {
+    id: "hpi",
+    title: "Taking History",
+    icon: "📋",
+    color: "yellow",
+    cards: [
+      {en:"Why did you come today?", es:"¿Por qué vino hoy?", pron:"por KEH VEE-noh oy", cat:"Opening"},
+      {en:"Tell me more", es:"Cuénteme más", pron:"KWEN-teh-meh mas", cat:"Opening"},
+      {en:"Since when have you had this problem?", es:"¿Desde cuándo tiene este problema?", pron:"DES-deh KWAN-doh TYEH-neh ES-teh pro-BLEH-mah", cat:"Opening"},
+      {en:"Where does it hurt?", es:"¿Dónde le duele?", pron:"DON-deh leh DWEH-leh", cat:"Pain"},
+      {en:"Point to where it hurts", es:"Señale dónde le duele", pron:"seh-NYA-leh DON-deh leh DWEH-leh", cat:"Pain"},
+      {en:"Is the pain constant or does it come and go?", es:"¿Es un dolor constante o va y viene?", pron:"es oon doh-LOR kon-STAN-teh oh vah ee BYEH-neh", cat:"Pain"},
+      {en:"Does the pain go anywhere else?", es:"¿El dolor se va a otro lugar?", pron:"el doh-LOR seh vah ah OH-troh loo-GAR", cat:"Pain"},
+      {en:"What is the pain like? Sharp? Burning? Pressure?", es:"¿Cómo es el dolor? ¿Agudo? ¿Ardor? ¿Presión?", pron:"KOH-moh es el doh-LOR? ah-GOO-doh? ar-DOR? preh-see-ON?", cat:"Pain"},
+      {en:"What makes it better?", es:"¿Qué le alivia el dolor?", pron:"keh leh ah-LEE-vya el doh-LOR", cat:"Pain"},
+      {en:"What makes it worse?", es:"¿Qué empeora el dolor?", pron:"keh em-peh-OH-ra el doh-LOR", cat:"Pain"},
+      {en:"Do you have fever or chills?", es:"¿Tiene fiebre o escalofríos?", pron:"TYEH-neh FYEH-breh oh es-ka-loh-FREE-ohs", cat:"Associated"},
+      {en:"Do you have difficulty urinating?", es:"¿Tiene dificultad para orinar?", pron:"TYEH-neh dee-fee-kool-TAD PA-ra oh-ree-NAR", cat:"Urology"},
+      {en:"Do you wake up at night to urinate?", es:"¿Se despierta de noche para orinar?", pron:"seh des-PYER-ta deh NOH-cheh PA-ra oh-ree-NAR", cat:"Urology"},
+      {en:"Is your urine stream weak?", es:"¿El chorro de orina es débil?", pron:"el CHO-roh deh oh-REE-na es DEH-beel", cat:"Urology"},
+      {en:"Have you seen blood in your urine?", es:"¿Ha visto sangre en la orina?", pron:"ah VEE-stoh SAN-greh en la oh-REE-na", cat:"Urology"},
+      {en:"Do you have pain in the testicle?", es:"¿Tiene dolor en el testículo?", pron:"TYEH-neh doh-LOR en el tes-TEE-koo-loh", cat:"Urology"},
+      {en:"Do you have problems with erections?", es:"¿Tiene problemas con las erecciones?", pron:"TYEH-neh pro-BLEH-mas kon las eh-rek-see-OH-nes", cat:"Urology"},
+      {en:"Are you trying to have children?", es:"¿Están intentando tener hijos?", pron:"es-TAN een-ten-TAN-doh teh-NER EE-hohs", cat:"Urology"},
+      {en:"Have you had a vasectomy?", es:"¿Le hicieron vasectomía?", pron:"leh ee-SYEH-ron va-sek-toh-MEE-ah", cat:"History"},
+      {en:"Have you used testosterone or steroids?", es:"¿Ha usado testosterona o esteroides?", pron:"ah oo-SA-doh tes-tos-teh-ROH-na oh es-teh-ROY-des", cat:"History"},
+    ]
+  },
+  {
+    id: "anatomy",
+    title: "Anatomy & Body Parts",
+    icon: "🫀",
+    color: "red",
+    cards: [
+      {en:"Kidney", es:"Riñón", pron:"ree-NYON", cat:"Anatomy"},
+      {en:"Bladder", es:"Vejiga", pron:"veh-HEE-ga", cat:"Anatomy"},
+      {en:"Urethra", es:"Uretra", pron:"oo-REH-tra", cat:"Anatomy"},
+      {en:"Ureter", es:"Uréter", pron:"oo-REH-ter", cat:"Anatomy"},
+      {en:"Prostate", es:"Próstata", pron:"PROS-ta-ta", cat:"Anatomy"},
+      {en:"Testicle", es:"Testículo", pron:"tes-TEE-koo-loh", cat:"Anatomy"},
+      {en:"Scrotum", es:"Escrotum / Bolsa escrotal", pron:"es-KROH-toom", cat:"Anatomy"},
+      {en:"Penis", es:"Pene", pron:"PEH-neh", cat:"Anatomy"},
+      {en:"Foreskin", es:"Prepucio", pron:"preh-POO-see-oh", cat:"Anatomy"},
+      {en:"Epididymis", es:"Epidídimo", pron:"eh-pee-DEE-dee-moh", cat:"Anatomy"},
+      {en:"Vas deferens", es:"Conducto deferente", pron:"kon-DOOK-toh deh-feh-REN-teh", cat:"Anatomy"},
+      {en:"Groin", es:"Ingle", pron:"EEN-gleh", cat:"Anatomy"},
+      {en:"Urine", es:"Orina", pron:"oh-REE-na", cat:"Terms"},
+      {en:"Sperm", es:"Esperma", pron:"es-PER-ma", cat:"Terms"},
+      {en:"Kidney stone", es:"Piedra en el riñón / Cálculo", pron:"PYED-ra en el ree-NYON", cat:"Terms"},
+      {en:"Catheter", es:"Catéter / Sonda urinaria", pron:"ka-TEH-ter / SON-da oo-ree-NA-rya", cat:"Terms"},
+      {en:"Wound / Incision", es:"Herida / Incisión", pron:"eh-REE-da / een-see-see-ON", cat:"Terms"},
+      {en:"Drain / Tube", es:"Tubo de drenaje / Sonda", pron:"TOO-boh deh dreh-NA-heh", cat:"Terms"},
+      {en:"Swelling", es:"Hinchazón", pron:"een-cha-SON", cat:"Symptoms"},
+      {en:"Bruising", es:"Moretones", pron:"moh-reh-TOH-nes", cat:"Symptoms"},
+      {en:"Infection", es:"Infección", pron:"een-fek-see-ON", cat:"Symptoms"},
+      {en:"Blood", es:"Sangre", pron:"SAN-greh", cat:"Symptoms"},
+      {en:"Fever", es:"Fiebre", pron:"FYEH-breh", cat:"Symptoms"},
+      {en:"Nausea", es:"Náuseas", pron:"NOW-seh-as", cat:"Symptoms"},
+    ]
+  },
+  {
+    id: "emergency",
+    title: "Urgent Phrases",
+    icon: "🚨",
+    color: "red",
+    cards: [
+      {en:"We need to take you to surgery right now", es:"Necesitamos llevarlo a cirugía ahora mismo", pron:"neh-seh-see-TAH-mos yeh-VAR-loh ah see-roo-HEE-ah AH-oh-rah MEES-moh", cat:"Urgent"},
+      {en:"This is urgent / serious", es:"Esto es urgente / grave", pron:"ES-toh es oor-HEN-teh / GRA-veh", cat:"Urgent"},
+      {en:"Do not eat or drink anything", es:"No coma ni beba nada", pron:"noh KOH-mah nee BEH-bah NA-da", cat:"Urgent"},
+      {en:"Are you allergic to any medications?", es:"¿Es alérgico a algún medicamento?", pron:"es ah-LER-hee-koh ah al-GOON meh-dee-ka-MEN-toh", cat:"Urgent"},
+      {en:"Can you tell me your name?", es:"¿Puede decirme su nombre?", pron:"PWEH-deh deh-SEER-meh soo NOM-breh", cat:"Assessment"},
+      {en:"What is your date of birth?", es:"¿Cuál es su fecha de nacimiento?", pron:"kwal es soo FEH-cha deh na-see-MYEN-toh", cat:"Assessment"},
+      {en:"Are you having trouble breathing?", es:"¿Tiene dificultad para respirar?", pron:"TYEH-neh dee-fee-kool-TAD PA-ra reh-spee-RAR", cat:"Assessment"},
+      {en:"When did this start?", es:"¿Cuándo empezó esto?", pron:"KWAN-doh em-peh-SOH ES-toh", cat:"Assessment"},
+      {en:"We are going to take good care of you", es:"Vamos a cuidarlo muy bien", pron:"VAH-mos ah kwee-DAR-loh mooy byehn", cat:"Reassurance"},
+      {en:"Do not worry, you are safe", es:"No se preocupe, está seguro", pron:"noh seh preh-oh-KOO-peh, es-TA seh-GOO-roh", cat:"Reassurance"},
+    ]
+  },
+  {
+    id: "discharge",
+    title: "Discharge & Instructions",
+    icon: "🏠",
+    color: "purple",
+    cards: [
+      {en:"You can go home today", es:"Puede irse a casa hoy", pron:"PWEH-deh EER-seh ah KA-sa oy", cat:"Discharge"},
+      {en:"Take your medications as prescribed", es:"Tome sus medicamentos como le recetamos", pron:"TOH-meh soos meh-dee-ka-MEN-tos KOH-moh leh reh-seh-TA-mos", cat:"Discharge"},
+      {en:"You have a follow-up appointment in [X] days", es:"Tiene una cita de seguimiento en [X] días", pron:"TYEH-neh OO-na SEE-ta deh seh-ghee-MYEN-toh", cat:"Discharge"},
+      {en:"If you have fever above 38 degrees, call us or go to the emergency room", es:"Si tiene fiebre mayor de 38 grados, llámenos o vaya a urgencias", pron:"see TYEH-neh FYEH-breh ma-YOR deh TREIN-ta-OH-choh GRA-dos", cat:"Warning Signs"},
+      {en:"If you cannot urinate, come back immediately", es:"Si no puede orinar, regrese inmediatamente", pron:"see noh PWEH-deh oh-ree-NAR, reh-GREH-seh een-meh-dya-tah-MEN-teh", cat:"Warning Signs"},
+      {en:"If the wound opens or has discharge, call us", es:"Si la herida se abre o sale pus, llámenos", pron:"see la eh-REE-dah seh AH-breh oh SA-leh poos, YA-meh-nos", cat:"Warning Signs"},
+      {en:"If you have severe pain not controlled by medication, come back", es:"Si tiene dolor muy fuerte que no mejora con la medicina, regrese", pron:"see TYEH-neh doh-LOR mooy FWER-teh...", cat:"Warning Signs"},
+      {en:"Do you have questions before you leave?", es:"¿Tiene preguntas antes de irse?", pron:"TYEH-neh preh-GOON-tas AN-tes deh EER-seh", cat:"Discharge"},
+    ]
+  },
+];
+
+const ALL_SCRIPTS = [
+  {
+    section: "Entering the Room — Every Morning",
+    items: [
+      {situation:"Enter room", es:"¡Buenos días! Soy Daniel, estudiante de medicina. Trabajo con el equipo de urología. ¿Puedo pasar?", en:"Good morning! I'm Daniel, a medical student. I work with the urology team. May I come in?"},
+      {situation:"Check on night", es:"¿Cómo pasó la noche? ¿Pudo dormir?", en:"How did the night go? Were you able to sleep?"},
+      {situation:"Pain check", es:"¿Tiene dolor ahorita? Del uno al diez, ¿cuánto es?", en:"Do you have pain right now? From 1 to 10, how much?"},
+      {situation:"Urology check", es:"¿Pudo orinar? ¿Vio sangre en la orina?", en:"Were you able to urinate? Did you see blood in the urine?"},
+      {situation:"Food/nausea", es:"¿Comió algo? ¿Tuvo náuseas?", en:"Did you eat? Did you have nausea?"},
+      {situation:"Walking", es:"¿Caminó un poco? Es muy importante caminar cada día.", en:"Did you walk? It is very important to walk every day."},
+      {situation:"Exam", es:"Voy a ver la herida y el tubo de drenaje. ¿Está bien?", en:"I'm going to check the wound and drain. Is that okay?"},
+      {situation:"Plan", es:"El doctor va a venir más tarde para hablar con usted.", en:"The doctor will come later to speak with you."},
+      {situation:"Close", es:"¿Tiene alguna pregunta? Estamos aquí para ayudarle. Hasta luego.", en:"Any questions? We are here to help. See you later."},
+    ]
+  },
+  {
+    section: "Post-Operative — Penile Prosthesis",
+    items: [
+      {situation:"Surgery done", es:"La cirugía terminó. Todo salió bien. Está en buenas manos.", en:"Surgery is done. Everything went well. You are in good hands."},
+      {situation:"About the implant", es:"Le pusimos el implante. Está adentro. Va a sentir un poco de hinchazón — es normal.", en:"We placed the implant. It's inside. You will feel some swelling — that's normal."},
+      {situation:"Do not inflate", es:"No infle el dispositivo todavía. El doctor le va a enseñar cuándo usarlo, en cuatro a seis semanas.", en:"Do not inflate the device yet. The doctor will teach you when to use it, in 4 to 6 weeks."},
+      {situation:"Activity", es:"No levante cosas pesadas. No tenga actividad sexual por seis semanas.", en:"No heavy lifting. No sexual activity for 6 weeks."},
+      {situation:"Warning signs", es:"Si tiene fiebre, enrojecimiento que aumenta, o la herida se abre — llámenos o regrese a urgencias.", en:"If you have fever, increasing redness, or the wound opens — call us or come back to the emergency room."},
+    ]
+  },
+  {
+    section: "Post-Operative — Hydrocelectomy / Scrotal Surgery",
+    items: [
+      {situation:"Explain", es:"Le quitamos el líquido del escrotum. La cirugía salió bien.", en:"We removed the fluid from the scrotum. The surgery went well."},
+      {situation:"Swelling", es:"Va a tener hinchazón y moretones por unas semanas. Es completamente normal.", en:"You will have swelling and bruising for a few weeks. This is completely normal."},
+      {situation:"Support", es:"Use el soporte escrotal todo el tiempo por dos semanas. Le ayuda mucho.", en:"Wear the scrotal support all the time for 2 weeks. It helps a lot."},
+      {situation:"Ice", es:"Puede poner hielo envuelto en una toalla — veinte minutos, varias veces al día.", en:"You can put ice wrapped in a towel — 20 minutes, several times a day."},
+      {situation:"Activity", es:"Descanse. No levante cosas pesadas por dos semanas.", en:"Rest. No heavy lifting for 2 weeks."},
+    ]
+  },
+  {
+    section: "Post-Operative — Vasectomy Reversal",
+    items: [
+      {situation:"Surgery done", es:"La reversión salió bien. Ahora hay que esperar para ver los resultados.", en:"The reversal went well. Now we wait to see the results."},
+      {situation:"Semen analysis", es:"En tres meses, necesitamos hacer un análisis de semen para ver si hay espermatozoides.", en:"In 3 months, we need to do a semen analysis to see if there are sperm."},
+      {situation:"Rest", es:"Descanse por cinco a siete días. Nada de levantamiento pesado por tres semanas.", en:"Rest for 5 to 7 days. No heavy lifting for 3 weeks."},
+      {situation:"Sex", es:"Espere tres a cuatro semanas antes de tener relaciones sexuales.", en:"Wait 3 to 4 weeks before sexual intercourse."},
+      {situation:"Follow-up", es:"Tiene cita de seguimiento en dos semanas.", en:"You have a follow-up appointment in 2 weeks."},
+    ]
+  },
+  {
+    section: "Taking History — Infertility / Vasectomy Reversal Consult",
+    items: [
+      {situation:"Open", es:"¿Cuánto tiempo llevan intentando tener un hijo?", en:"How long have you been trying to have a child?"},
+      {situation:"Prior children", es:"¿Ha tenido hijos antes? ¿Con esta pareja o con otra?", en:"Have you had children before? With this partner or another?"},
+      {situation:"Vasectomy", es:"¿Cuándo le hicieron la vasectomía? ¿Cuántos años hace?", en:"When did you have your vasectomy? How many years ago?"},
+      {situation:"Testosterone/steroids", es:"¿Ha usado testosterona, esteroides, o suplementos para el cuerpo?", en:"Have you used testosterone, steroids, or body supplements?"},
+      {situation:"Prior surgery", es:"¿Ha tenido cirugías en la ingle, el escrotum, o la próstata?", en:"Have you had surgeries in the groin, scrotum, or prostate?"},
+      {situation:"Exposures", es:"¿Ha recibido quimioterapia o radiación?", en:"Have you received chemotherapy or radiation?"},
+    ]
+  },
+  {
+    section: "Taking History — Erectile Dysfunction Consult",
+    items: [
+      {situation:"Open gently", es:"Quiero hacerle algunas preguntas sobre la función sexual. Todo es confidencial.", en:"I want to ask you some questions about sexual function. Everything is confidential."},
+      {situation:"Erections", es:"¿Tiene problemas para tener o mantener erecciones?", en:"Do you have problems getting or maintaining erections?"},
+      {situation:"Duration", es:"¿Cuánto tiempo lleva con este problema?", en:"How long have you had this problem?"},
+      {situation:"Morning erections", es:"¿Tiene erecciones en la mañana al despertar?", en:"Do you have morning erections when you wake up?"},
+      {situation:"Medications tried", es:"¿Ha probado algún medicamento para las erecciones?", en:"Have you tried any medication for erections?"},
+      {situation:"Partner", es:"¿Esto está afectando su relación con su pareja?", en:"Is this affecting your relationship with your partner?"},
+    ]
+  },
+];
+
+const ALL_VOCAB = [
+  // Anatomy
+  {en:"Kidney", es:"Riñón", pron:"ree-NYON", cat:"Anatomy"},
+  {en:"Bladder", es:"Vejiga", pron:"veh-HEE-ga", cat:"Anatomy"},
+  {en:"Urethra", es:"Uretra", pron:"oo-REH-tra", cat:"Anatomy"},
+  {en:"Ureter", es:"Uréter", pron:"oo-REH-ter", cat:"Anatomy"},
+  {en:"Prostate", es:"Próstata", pron:"PROS-ta-ta", cat:"Anatomy"},
+  {en:"Testicle", es:"Testículo", pron:"tes-TEE-koo-loh", cat:"Anatomy"},
+  {en:"Scrotum", es:"Escrotum", pron:"es-KROH-toom", cat:"Anatomy"},
+  {en:"Penis", es:"Pene", pron:"PEH-neh", cat:"Anatomy"},
+  {en:"Epididymis", es:"Epidídimo", pron:"eh-pee-DEE-dee-moh", cat:"Anatomy"},
+  {en:"Vas deferens", es:"Conducto deferente", pron:"kon-DOOK-toh deh-feh-REN-teh", cat:"Anatomy"},
+  {en:"Groin", es:"Ingle", pron:"EEN-gleh", cat:"Anatomy"},
+  {en:"Foreskin", es:"Prepucio", pron:"preh-POO-see-oh", cat:"Anatomy"},
+  // Symptoms
+  {en:"Pain", es:"Dolor", pron:"doh-LOR", cat:"Symptoms"},
+  {en:"Swelling", es:"Hinchazón", pron:"een-cha-SON", cat:"Symptoms"},
+  {en:"Fever", es:"Fiebre", pron:"FYEH-breh", cat:"Symptoms"},
+  {en:"Nausea", es:"Náuseas", pron:"NOW-seh-as", cat:"Symptoms"},
+  {en:"Vomiting", es:"Vómito", pron:"VOH-mee-toh", cat:"Symptoms"},
+  {en:"Bruising", es:"Moretones", pron:"moh-reh-TOH-nes", cat:"Symptoms"},
+  {en:"Blood in urine", es:"Sangre en la orina", pron:"SAN-greh en la oh-REE-na", cat:"Symptoms"},
+  {en:"Burning with urination", es:"Ardor al orinar", pron:"ar-DOR al oh-ree-NAR", cat:"Symptoms"},
+  {en:"Constipation", es:"Estreñimiento", pron:"es-treh-nyee-MYEN-toh", cat:"Symptoms"},
+  {en:"Infection", es:"Infección", pron:"een-fek-see-ON", cat:"Symptoms"},
+  // Procedures
+  {en:"Surgery", es:"Cirugía", pron:"see-roo-HEE-ah", cat:"Procedures"},
+  {en:"Vasectomy", es:"Vasectomía", pron:"va-sek-toh-MEE-ah", cat:"Procedures"},
+  {en:"Vasectomy reversal", es:"Reversión de vasectomía", pron:"reh-ver-see-ON deh va-sek-toh-MEE-ah", cat:"Procedures"},
+  {en:"Penile implant", es:"Implante de pene", pron:"eem-PLAN-teh deh PEH-neh", cat:"Procedures"},
+  {en:"Hernia repair", es:"Reparación de hernia", pron:"reh-pa-ra-see-ON deh ER-nya", cat:"Procedures"},
+  {en:"Prostate surgery", es:"Cirugía de próstata", pron:"see-roo-HEE-ah deh PROS-ta-ta", cat:"Procedures"},
+  // Equipment
+  {en:"Catheter", es:"Catéter / Sonda", pron:"ka-TEH-ter / SON-da", cat:"Equipment"},
+  {en:"Drain tube", es:"Tubo de drenaje", pron:"TOO-boh deh dreh-NA-heh", cat:"Equipment"},
+  {en:"Wound / Incision", es:"Herida / Incisión", pron:"eh-REE-dah / een-see-see-ON", cat:"Equipment"},
+  {en:"Scrotal support", es:"Soporte escrotal", pron:"so-POR-teh es-kro-TAL", cat:"Equipment"},
+  {en:"IV line", es:"Suero / Vía intravenosa", pron:"SWEH-roh / VEE-ah", cat:"Equipment"},
+  // Basics
+  {en:"Yes", es:"Sí", pron:"see", cat:"Basics"},
+  {en:"No", es:"No", pron:"noh", cat:"Basics"},
+  {en:"I don't understand", es:"No entiendo", pron:"noh en-tee-EN-doh", cat:"Basics"},
+  {en:"Please repeat", es:"Repita por favor", pron:"reh-PEE-tah por fa-VOR", cat:"Basics"},
+  {en:"More slowly", es:"Más despacio", pron:"mas des-PA-see-oh", cat:"Basics"},
+  {en:"Thank you", es:"Gracias", pron:"GRA-see-as", cat:"Basics"},
+  {en:"I need an interpreter", es:"Necesito un intérprete", pron:"neh-seh-SEE-toh oon een-TER-preh-teh", cat:"Basics"},
+];
+
+// ══════════════════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════════════════
+let currentDeck = null;
+let currentQueue = [];
+let currentCardIndex = 0;
+let cardFlipped = false;
+let sessionStats = {easy:0, med:0, hard:0};
+let cardRatings = {};
+let totalXP = parseInt(localStorage.getItem('medspanish_xp') || '0');
+let currentScienceTipIndex = 0;
+
+// ══════════════════════════════════════════════════════════════
+// SCREEN ROUTING
+// ══════════════════════════════════════════════════════════════
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+  const screenMap = {home:'screen-home', flashcards:'screen-flashcards', scripts:'screen-scripts', vocab:'screen-vocab', complete:'screen-complete'};
+  const tabIdx = {home:0, flashcards:1, scripts:2, vocab:3};
+
+  const target = document.getElementById(screenMap[name] || 'screen-home');
+  if (target) target.classList.add('active');
+
+  const tabs = document.querySelectorAll('.tab-btn');
+  if (tabIdx[name] !== undefined) tabs[tabIdx[name]]?.classList.add('active');
+
+  window.scrollTo(0,0);
+
+  if (name === 'scripts') renderScripts();
+  if (name === 'vocab')   renderVocab();
+  if (name === 'home')    renderHome();
+}
+
+// ══════════════════════════════════════════════════════════════
+// HOME
+// ══════════════════════════════════════════════════════════════
+function renderHome() {
+  const grid = document.getElementById('deck-grid');
+  grid.innerHTML = '';
+  DECKS.forEach(deck => {
+    const ratings = cardRatings[deck.id] || {};
+    const learned = Object.values(ratings).filter(r => r >= 3).length;
+    const pct = deck.cards.length ? Math.round(100*learned/deck.cards.length) : 0;
+    const card = document.createElement('div');
+    card.className = `deck-card ${deck.color}`;
+    card.innerHTML = `
+      <div class="deck-icon">${deck.icon}</div>
+      <div class="deck-title">${deck.title}</div>
+      <div class="deck-count">${deck.cards.length} cards</div>
+      <div class="deck-bar"><div class="deck-bar-fill" style="width:${pct}%"></div></div>
+      <div class="deck-bar-label">${pct}% confident</div>
+    `;
+    card.onclick = () => startDeck(deck.id);
+    grid.appendChild(card);
+  });
+  updateXPBadge();
+}
+
+// ══════════════════════════════════════════════════════════════
+// FLASHCARD ENGINE (SPACED REPETITION)
+// ══════════════════════════════════════════════════════════════
+function startDeck(deckId) {
+  currentDeck = DECKS.find(d => d.id === deckId);
+  if (!currentDeck) return;
+  const ratings = cardRatings[deckId] || {};
+  // Sort: hard (1) first, unrated (2) second, easy (5) last
+  currentQueue = [...currentDeck.cards].sort((a,b) => {
+    const ra = ratings[currentDeck.cards.indexOf(a)] || 2;
+    const rb = ratings[currentDeck.cards.indexOf(b)] || 2;
+    return ra - rb;
+  });
+  currentCardIndex = 0;
+  sessionStats = {easy:0, med:0, hard:0};
+  cardFlipped = false;
+  currentScienceTipIndex = Math.floor(Math.random() * SCIENCE_TIPS.length);
+  document.getElementById('fc-deck-name').textContent = currentDeck.title;
+  showScreen('flashcards');
+  loadCard();
+}
+
+function loadCard() {
+  if (currentCardIndex >= currentQueue.length) {
+    showComplete();
+    return;
+  }
+  const card = currentQueue[currentCardIndex];
+  cardFlipped = false;
+  const inner = document.getElementById('card-inner');
+  inner.classList.remove('flipped');
+
+  document.getElementById('card-cat').textContent = card.cat;
+  document.getElementById('card-en').textContent = card.en;
+  document.getElementById('card-hint').textContent = '';
+  document.getElementById('card-cat-back').textContent = card.cat;
+  document.getElementById('card-es').textContent = card.es;
+  document.getElementById('card-pron').textContent = card.pron;
+  document.getElementById('card-en-small').textContent = card.en;
+
+  document.getElementById('rating-area').classList.add('rating-hidden');
+  document.getElementById('skip-row').classList.add('rating-hidden');
+
+  // Progress
+  const pct = currentQueue.length ? Math.round(100*currentCardIndex/currentQueue.length) : 0;
+  document.getElementById('fc-prog').style.width = pct + '%';
+  document.getElementById('fc-count').textContent = `${currentCardIndex+1}/${currentQueue.length}`;
+
+  // Science tip rotation
+  const tips = SCIENCE_TIPS;
+  document.getElementById('science-tip-text').innerHTML = tips[currentCardIndex % tips.length];
+}
+
+function flipCard() {
+  if (cardFlipped) return;
+  cardFlipped = true;
+  document.getElementById('card-inner').classList.add('flipped');
+  setTimeout(() => {
+    document.getElementById('rating-area').classList.remove('rating-hidden');
+    document.getElementById('skip-row').classList.remove('rating-hidden');
+  }, 300);
+}
+
+function rateCard(rating) {
+  if (!currentDeck) return;
+  const origIdx = currentDeck.cards.indexOf(currentQueue[currentCardIndex]);
+  if (!cardRatings[currentDeck.id]) cardRatings[currentDeck.id] = {};
+  cardRatings[currentDeck.id][origIdx] = rating;
+
+  if (rating === 1) sessionStats.hard++;
+  else if (rating === 3) sessionStats.med++;
+  else sessionStats.easy++;
+
+  // XP
+  const xpGain = rating === 5 ? 10 : rating === 3 ? 5 : 2;
+  totalXP += xpGain;
+  localStorage.setItem('medspanish_xp', totalXP);
+  updateXPBadge();
+  showToast(rating === 5 ? '✅ +10 XP — Keep it up!' : rating === 3 ? '🤔 +5 XP' : '💪 +2 XP — You\'ll get it');
+
+  currentCardIndex++;
+  setTimeout(loadCard, 150);
+}
+
+function skipCard() {
+  currentCardIndex++;
+  cardFlipped = false;
+  loadCard();
+}
+
+function restartDeck() {
+  if (!currentDeck) return;
+  // Only review hard cards
+  const ratings = cardRatings[currentDeck.id] || {};
+  const hardCards = currentDeck.cards.filter((c,i) => (ratings[i] || 2) <= 2);
+  if (hardCards.length === 0) {
+    showToast('🎉 No hard cards left! You know this deck.');
+    showScreen('home');
+    return;
+  }
+  currentQueue = hardCards;
+  currentCardIndex = 0;
+  sessionStats = {easy:0, med:0, hard:0};
+  cardFlipped = false;
+  showScreen('flashcards');
+  loadCard();
+}
+
+function showComplete() {
+  document.getElementById('stat-easy').textContent = sessionStats.easy;
+  document.getElementById('stat-med').textContent = sessionStats.med;
+  document.getElementById('stat-hard').textContent = sessionStats.hard;
+  document.getElementById('complete-sub').textContent =
+    sessionStats.hard > 0
+      ? `${sessionStats.hard} hard cards are queued to review again first next session. That's how spaced repetition works — struggle is the point.`
+      : `You marked everything as Got It or Easy. Solid session. Come back tomorrow to keep it fresh.`;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-complete').classList.add('active');
+}
+
+// ══════════════════════════════════════════════════════════════
+// AUDIO
+// ══════════════════════════════════════════════════════════════
+function speakSpanish(e) {
+  e.stopPropagation();
+  const card = currentQueue[currentCardIndex];
+  if (!card) return;
+  const btn = document.getElementById('speak-btn');
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const utt = new SpeechSynthesisUtterance(card.es);
+    utt.lang = 'es-MX';
+    utt.rate = 0.82;
+    utt.pitch = 1.0;
+    btn.classList.add('playing');
+    btn.textContent = '🔊 Playing...';
+    utt.onend = () => { btn.classList.remove('playing'); btn.innerHTML = '🔊 Hear it'; };
+    window.speechSynthesis.speak(utt);
+  }
+}
+
+function speakText(text, btnEl) {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const utt = new SpeechSynthesisUtterance(text);
+    utt.lang = 'es-MX';
+    utt.rate = 0.82;
+    if (btnEl) { btnEl.textContent = '🔊'; setTimeout(() => btnEl.textContent = '▶', 1200); }
+    window.speechSynthesis.speak(utt);
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// SCRIPTS
+// ══════════════════════════════════════════════════════════════
+function renderScripts() {
+  const container = document.getElementById('scripts-list');
+  container.innerHTML = '';
+  ALL_SCRIPTS.forEach(section => {
+    const sec = document.createElement('div');
+    sec.style.marginBottom = '32px';
+    const title = document.createElement('h2');
+    title.style.cssText = 'font-size:18px;font-weight:700;color:#58A6FF;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #30363D;';
+    title.textContent = section.section;
+    sec.appendChild(title);
+    section.items.forEach(item => {
+      const row = document.createElement('div');
+      row.className = 'script-row';
+      row.innerHTML = `
+        <div class="script-situation">${item.situation}</div>
+        <div class="script-es">
+          <div class="script-es-text">${item.es}</div>
+          <button class="script-speak" onclick="speakText('${item.es.replace(/'/g,"\\'")}', this)" title="Hear it">▶</button>
+        </div>
+        <div class="script-en">${item.en}</div>
+      `;
+      sec.appendChild(row);
+    });
+    container.appendChild(sec);
+  });
+}
+
+// ══════════════════════════════════════════════════════════════
+// VOCAB SEARCH
+// ══════════════════════════════════════════════════════════════
+function renderVocab(filter = '') {
+  const grid = document.getElementById('vocab-grid');
+  const filtered = filter
+    ? ALL_VOCAB.filter(v =>
+        v.en.toLowerCase().includes(filter.toLowerCase()) ||
+        v.es.toLowerCase().includes(filter.toLowerCase()) ||
+        v.cat.toLowerCase().includes(filter.toLowerCase())
+      )
+    : ALL_VOCAB;
+  grid.innerHTML = '';
+  filtered.forEach(v => {
+    const item = document.createElement('div');
+    item.className = 'vocab-item';
+    item.innerHTML = `
+      <div class="vocab-cat">${v.cat}</div>
+      <div class="vocab-en">${v.en}</div>
+      <div class="vocab-es">${v.es}</div>
+      <div class="vocab-pron">${v.pron}</div>
+    `;
+    item.onclick = () => speakText(v.es);
+    grid.appendChild(item);
+  });
+}
+
+function filterVocab() {
+  const val = document.getElementById('vocab-search').value;
+  renderVocab(val);
+}
+
+// ══════════════════════════════════════════════════════════════
+// UTILS
+// ══════════════════════════════════════════════════════════════
+function updateXPBadge() {
+  document.getElementById('xp-badge').textContent = `⚡ ${totalXP} XP`;
+}
+
+let toastTimer = null;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// ══════════════════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════════════════
+renderHome();
+updateXPBadge();
+</script>
+</body>
+</html>
